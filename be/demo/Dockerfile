@@ -5,7 +5,7 @@ FROM openjdk:17-alpine AS builder
 COPY /gradle gradle
 COPY /gradlew .
 COPY /build.gradle .
-COPY /settings.gradle .
+COPY /settings.gradle.kts .
 COPY /src src
 RUN chmod +x gradlew
 
