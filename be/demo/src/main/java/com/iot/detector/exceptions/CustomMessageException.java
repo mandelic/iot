@@ -7,6 +7,10 @@ import lombok.Setter;
 @Setter
 public class CustomMessageException extends RuntimeException{
     private String message;
+    private int errorCode;
 
-    public CustomMessageException(String message) { this.message = message;}
+    public CustomMessageException(String message, int errorCode) {
+        this.message = message;
+        this.errorCode = errorCode;
+    }
 }

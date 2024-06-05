@@ -36,7 +36,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllDeleted().stream().map(UserDetailsDTO::new).collect(Collectors.toList()));
     }
 
-    //@PreAuthorize("hasAnyRole('MEMBER', 'ADMIN')")
+    //@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDetailsDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(new UserDetailsDTO(userService.findById(id)));

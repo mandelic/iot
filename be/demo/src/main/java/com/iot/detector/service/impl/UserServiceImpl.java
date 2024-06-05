@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     public User changeRole(Long id, String role) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserIdNotFoundException(id));
         List<String> roles = Arrays.asList("ROLE_USER", "ROLE_ADMIN", "ROLE_DELETED");
-        if (!roles.contains(role)) throw new CustomMessageException("Role does not exist.");
+        if (!roles.contains(role)) throw new CustomMessageException("Role does not exist.", 2);
         user.setRole(role);
         return userRepository.save(user);
     }
