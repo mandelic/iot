@@ -1,5 +1,7 @@
 package com.iot.detector.controller;
 
+import com.iot.detector.controller.dto.ThingsBoardTokenDto;
+import com.iot.detector.controller.dto.VolumeDto;
 import com.iot.detector.service.ThingsBoardRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class ThingsBoardController {
 
     @GetMapping("/asset/{id}")
     public String fetchAsset(@PathVariable String id) {
-        return thingsBoardRestClient.fetchAsset(id);
+        return thingsBoardRestClient.fetchAssetById(id);
     }
 
     @GetMapping("/tenant-assets")
@@ -36,11 +38,21 @@ public class ThingsBoardController {
 
     @GetMapping("/device/{id}")
     public String fetchDevice(@PathVariable String id) {
-        return thingsBoardRestClient.fetchDevice(id);
+        return thingsBoardRestClient.fetchDeviceById(id);
     }
 
     @GetMapping("/tenant-devices")
     public List<Device> fetchTenantDevices() {
         return thingsBoardRestClient.fetchTenantDevices();
+    }
+
+    @GetMapping("/jwt-token")
+    public ThingsBoardTokenDto fetchJwtToken() {
+        return thingsBoardRestClient.fetchJwtToken();
+    }
+
+    @GetMapping("/telemetry")
+    public VolumeDto fetchTelemetry() {
+        return thingsBoardRestClient.fetchTelemetryData();
     }
 }
