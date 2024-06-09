@@ -3,6 +3,7 @@ package com.iot.detector.service;
 import com.iot.detector.controller.dto.LoginRequestDto;
 import com.iot.detector.controller.dto.ThingsBoardTokenDto;
 import com.iot.detector.controller.dto.VolumeDto;
+import com.iot.detector.controller.dto.VolumeItem;
 import com.iot.detector.exceptions.CustomMessageException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +30,7 @@ public class ThingsBoardRestClient {
     String password = "U&6WcT9T$~:TXpX";
     RestClient client;
     boolean isConnected = false;
+    int VOLUME_LIMIT = 50;
 
     private final RestTemplate restTemplate;
 
@@ -107,9 +109,14 @@ public class ThingsBoardRestClient {
         headers.set("Accept", "application/json");
         headers.set("X-Authorization", "Bearer " + jwtToken);
         HttpEntity<String> request = new HttpEntity<>(headers);
-        return restTemplate.exchange(telemetryUrl, HttpMethod.GET, request, VolumeDto.class).getBody();
+        VolumeDto volumeData = restTemplate.exchange(telemetryUrl, HttpMethod.GET, request, VolumeDto.class).getBody();
+        assert volumeData != null;
+        int value = Integer.parseInt(volumeData.getVolume().get(0).getValue());
+        if (value > VOLUME_LIMIT) {
+            throw new CustomMessageException("Volume limit exceeded. Volume value = " + value, 3);
+        }
+        return volumeData;
     }
-
 
     private void checkConnection() {
         if (!isConnected) {
