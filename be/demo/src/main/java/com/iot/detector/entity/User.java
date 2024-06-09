@@ -8,6 +8,9 @@ import lombok.Setter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
@@ -38,11 +41,24 @@ public class User {
 
     private String role;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_group_users",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_group_id")
+    )
+    private Set<UserGroup> userGroups = new HashSet<>();
+
     public User(String email, String firstName, String lastName, String password) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.role = "ROLE_USER";
+    }
+
+    public void addUserGroup(UserGroup userGroup) {
+        this.userGroups.add(userGroup);
+        userGroup.getUsers().add(this);
     }
 }

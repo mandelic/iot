@@ -5,6 +5,7 @@ import com.iot.detector.controller.dto.UserDTO;
 import com.iot.detector.controller.dto.UserDetailsDTO;
 import com.iot.detector.entity.User;
 import com.iot.detector.service.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,8 +58,13 @@ public class UserController {
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserDetailsDTO> deleteTournament(@PathVariable Long id) {
+    public ResponseEntity<UserDetailsDTO> deleteUser(@PathVariable Long id) {
         return ResponseEntity.ok(new UserDetailsDTO(userService.deleteUser(id)));
+    }
+
+    @PostMapping("/{id}/group/{groupId}")
+    public ResponseEntity<UserDetailsDTO> addGroup(@PathVariable Long id, @PathVariable Long groupId) {
+        return ResponseEntity.ok(new UserDetailsDTO(userService.addUserGroup(id, groupId)));
     }
 
 }

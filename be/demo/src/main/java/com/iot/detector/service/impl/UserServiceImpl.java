@@ -3,8 +3,11 @@ package com.iot.detector.service.impl;
 import com.iot.detector.controller.dto.LoginDTO;
 import com.iot.detector.controller.dto.TokenDTO;
 import com.iot.detector.entity.User;
+import com.iot.detector.entity.UserGroup;
 import com.iot.detector.exceptions.CustomMessageException;
+import com.iot.detector.exceptions.EntityIdNotFoundException;
 import com.iot.detector.exceptions.UserIdNotFoundException;
+import com.iot.detector.repository.UserGroupRepository;
 import com.iot.detector.repository.UserRepository;
 import com.iot.detector.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserGroupRepository userGroupRepository;
+
     public List<User> findAll() {
         List<User> all = userRepository.findAll();
         all.removeAll(userRepository.findAllByRole("ROLE_DELETED"));
@@ -31,6 +37,13 @@ public class UserServiceImpl implements UserService {
 
     public List<User> findAllDeleted() {
         return userRepository.findAllByRole("ROLE_DELETED");
+    }
+
+    public User addUserGroup(Long userId, Long groupId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserIdNotFoundException(userId));
+        UserGroup userGroup = userGroupRepository.findById(groupId).orElseThrow(() -> new EntityIdNotFoundException("UserGroup", groupId));
+        user.addUserGroup(userGroup);
+        return userRepository.save(user);
     }
 
     public User addUser(User user) {

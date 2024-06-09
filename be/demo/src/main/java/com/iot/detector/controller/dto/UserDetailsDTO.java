@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @Getter
 @Setter
@@ -16,7 +19,7 @@ public class UserDetailsDTO {
     private String email;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    private Set<UserGroupDetailsDTO> groups;
     private String role;
 
     public UserDetailsDTO(User user) {
@@ -24,6 +27,7 @@ public class UserDetailsDTO {
         this.email = user.getEmail();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
+        this.groups = user.getUserGroups().stream().map(UserGroupDetailsDTO::new).collect(Collectors.toSet());
         this.role = user.getRole();
     }
 

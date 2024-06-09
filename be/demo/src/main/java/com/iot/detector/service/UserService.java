@@ -1,6 +1,5 @@
 package com.iot.detector.service;
 
-
 import com.iot.detector.controller.dto.LoginDTO;
 import com.iot.detector.controller.dto.TokenDTO;
 import com.iot.detector.entity.User;
@@ -15,4 +14,5 @@ public interface UserService {
     User changeRole(Long id, String role);
     User deleteUser(Long id);
     List<User> findAllDeleted();
+    User addUserGroup(Long userId, Long groupId);
 }
