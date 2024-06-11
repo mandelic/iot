@@ -53,9 +53,9 @@ public class ThingsBoardController {
         return thingsBoardRestClient.fetchJwtToken();
     }
 
-    @GetMapping("/telemetry")
-    public VolumeDto fetchTelemetry() {
-        return thingsBoardRestClient.fetchTelemetryData();
+    @GetMapping("/telemetry/{deviceId}")
+    public VolumeDto fetchTelemetry(@PathVariable String deviceId) {
+        return thingsBoardRestClient.fetchTelemetryData(deviceId);
     }
 
     @GetMapping("/devices/{assetId}")

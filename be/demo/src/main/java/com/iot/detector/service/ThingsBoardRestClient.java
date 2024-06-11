@@ -130,10 +130,10 @@ public class ThingsBoardRestClient {
         return restTemplate.exchange(loginUrl, HttpMethod.POST, request, ThingsBoardTokenDto.class).getBody();
     }
 
-    public VolumeDto fetchTelemetryData() {
+    public VolumeDto fetchTelemetryData(String id) {
         checkConnection();
         String jwtToken = fetchJwtToken().getToken();
-        String telemetryUrl = url + "/api/plugins/telemetry/DEVICE/d1e281c0-1eae-11ef-a963-a37ba3a57ce2/values/timeseries?keys=volume";
+        String telemetryUrl = url + "/api/plugins/telemetry/DEVICE/" + id + "/values/timeseries?keys=volume";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         headers.set("Accept", "application/json");
