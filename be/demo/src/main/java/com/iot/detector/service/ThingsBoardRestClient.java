@@ -1,5 +1,7 @@
 package com.iot.detector.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.iot.detector.controller.dto.*;
 import com.iot.detector.exceptions.CustomMessageException;
 import com.iot.detector.exceptions.EntityIdNotFoundException;
@@ -13,6 +15,7 @@ import org.thingsboard.server.common.data.Device;
 import org.thingsboard.server.common.data.EntityType;
 import org.thingsboard.server.common.data.asset.Asset;
 import org.thingsboard.server.common.data.device.DeviceSearchQuery;
+import org.thingsboard.server.common.data.device.data.DeviceData;
 import org.thingsboard.server.common.data.id.AssetId;
 import org.thingsboard.server.common.data.id.DeviceId;
 import org.thingsboard.server.common.data.id.EntityId;
@@ -110,6 +113,13 @@ public class ThingsBoardRestClient {
         AssetId assetId = new AssetId(id);
         device.setName(deviceDto.getDeviceName());
         device.setLabel(deviceDto.getDeviceLabel());
+        ObjectMapper mapper = new ObjectMapper();
+        DeviceDto.Point point = deviceDto.getPoint();
+        String builder = point.getX() +
+                "," +
+                point.getY();
+        ObjectNode additionalInfoNode = mapper.createObjectNode().put("description", builder);
+        device.setAdditionalInfo(additionalInfoNode);
         Device newDevice = client.createDevice(device);
         EntityRelation relation = new EntityRelation();
         relation.setTypeGroup(RelationTypeGroup.COMMON);

@@ -8,4 +8,10 @@ import lombok.Setter;
 public class DeviceDto {
     private String deviceName;
     private String deviceLabel;
+    private Point point;
+    @Getter
+    public static class Point {
+        private double x;
+        private double y;
+    }
 }
