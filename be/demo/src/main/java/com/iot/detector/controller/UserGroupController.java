@@ -44,7 +44,9 @@ public class UserGroupController {
             User user = userService.findById(userId);
             userGroup.addUser(user);
             addedUsers.add(new BasicUserDTO(user));
+            userService.updateUser(user);
         }
+        userGroupRepository.save(userGroup);
         return addedUsers;
     }
 

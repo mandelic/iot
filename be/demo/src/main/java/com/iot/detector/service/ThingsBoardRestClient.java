@@ -1,10 +1,8 @@
 package com.iot.detector.service;
 
-import com.iot.detector.controller.dto.LoginRequestDto;
-import com.iot.detector.controller.dto.ThingsBoardTokenDto;
-import com.iot.detector.controller.dto.VolumeDto;
-import com.iot.detector.controller.dto.VolumeItem;
+import com.iot.detector.controller.dto.*;
 import com.iot.detector.exceptions.CustomMessageException;
+import com.iot.detector.exceptions.EntityIdNotFoundException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,16 +10,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.thingsboard.rest.client.RestClient;
 import org.thingsboard.server.common.data.Device;
+import org.thingsboard.server.common.data.EntityType;
 import org.thingsboard.server.common.data.asset.Asset;
+import org.thingsboard.server.common.data.device.DeviceSearchQuery;
 import org.thingsboard.server.common.data.id.AssetId;
 import org.thingsboard.server.common.data.id.DeviceId;
+import org.thingsboard.server.common.data.id.EntityId;
 import org.thingsboard.server.common.data.page.PageData;
 import org.thingsboard.server.common.data.page.PageLink;
+import org.thingsboard.server.common.data.query.*;
+import org.thingsboard.server.common.data.relation.EntityRelation;
+import org.thingsboard.server.common.data.relation.EntitySearchDirection;
+import org.thingsboard.server.common.data.relation.RelationTypeGroup;
+import org.thingsboard.server.common.data.relation.RelationsSearchParameters;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ThingsBoardRestClient {
@@ -31,6 +34,7 @@ public class ThingsBoardRestClient {
     RestClient client;
     boolean isConnected = false;
     int VOLUME_LIMIT = 50;
+    String CONTAINS = "Contains";
 
     private final RestTemplate restTemplate;
 
@@ -88,6 +92,32 @@ public class ThingsBoardRestClient {
         } while (pageData.hasNext());
 
         return list;
+    }
+
+    public List<Device> fetchAssetDevices(UUID id) {
+        checkConnection();
+        DeviceSearchQuery query = new DeviceSearchQuery();
+        query.setDeviceTypes(List.of("default"));
+        query.setRelationType(CONTAINS);
+        RelationsSearchParameters parameters = new RelationsSearchParameters(id, EntityType.ASSET, EntitySearchDirection.FROM, RelationTypeGroup.COMMON, 1073741824, true);
+        query.setParameters(parameters);
+        return client.findByQuery(query);
+    }
+
+    public Device createDevice(DeviceDto deviceDto, UUID id) {
+        checkConnection();
+        Device device = new Device();
+        AssetId assetId = new AssetId(id);
+        device.setName(deviceDto.getDeviceName());
+        device.setLabel(deviceDto.getDeviceLabel());
+        Device newDevice = client.createDevice(device);
+        EntityRelation relation = new EntityRelation();
+        relation.setTypeGroup(RelationTypeGroup.COMMON);
+        relation.setType(CONTAINS);
+        relation.setTo(newDevice.getId());
+        relation.setFrom(assetId);
+        client.saveRelation(relation);
+        return newDevice;
     }
 
     public ThingsBoardTokenDto fetchJwtToken() {

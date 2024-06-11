@@ -6,14 +6,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter @Setter @AllArgsConstructor
 public class FloorPlanDTO {
     private Long id;
+    private UUID assetId;
     private String name;
 
     public FloorPlanDTO(FloorPlan floorPlan) {
         this.id = floorPlan.getId();
         this.name = floorPlan.getName();
+        this.assetId = floorPlan.getAssetId();
     }
 
 }

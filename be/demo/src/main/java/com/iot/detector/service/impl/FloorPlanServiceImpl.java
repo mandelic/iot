@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thingsboard.server.common.data.id.AssetId;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +41,13 @@ public class FloorPlanServiceImpl implements FloorPlanService {
         FloorPlan floorPlan = getFloorPlan(id);
         floorPlanRepository.deleteById(id);
         return floorPlan;
+    }
+
+    public FloorPlan updateFloorPlan(FloorPlan floorPlan) {
+        return floorPlanRepository.save(floorPlan);
+    }
+
+    public List<FloorPlan> getAllFloorPlans() {
+        return floorPlanRepository.findAll();
     }
 }

@@ -15,4 +15,5 @@ public interface UserService {
     User deleteUser(Long id);
     List<User> findAllDeleted();
     User addUserGroup(Long userId, Long groupId);
+    User updateUser(User user);
 }

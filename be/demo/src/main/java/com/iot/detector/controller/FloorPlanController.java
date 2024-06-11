@@ -1,6 +1,7 @@
 package com.iot.detector.controller;
 
 import com.iot.detector.controller.dto.BasicUserDTO;
+import com.iot.detector.controller.dto.FloorPlanDTO;
 import com.iot.detector.controller.dto.UserGroupDetailsDTO;
 import com.iot.detector.entity.FloorPlan;
 import com.iot.detector.entity.User;
@@ -19,6 +20,8 @@ import org.thingsboard.server.common.data.id.AssetId;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/floor-plans")
@@ -50,6 +53,11 @@ public class FloorPlanController {
                 .body(floorPlan.getData());
     }
 
+    @GetMapping
+    public List<FloorPlanDTO> getAllFloorPlans() {
+        return floorPlanService.getAllFloorPlans().stream().map(FloorPlanDTO::new).collect(Collectors.toList());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFloorPlan(@PathVariable Long id) {
         FloorPlan floorPlan = floorPlanService.deleteFloorPlan(id);
@@ -66,7 +74,9 @@ public class FloorPlanController {
             User user = userService.findById(userId);
             floorPlan.addUser(user);
             addedUsers.add(new BasicUserDTO(user));
+            userService.updateUser(user);
         }
+        floorPlanService.updateFloorPlan(floorPlan);
         return addedUsers;
     }
 }
