@@ -36,7 +36,7 @@ public class ThingsBoardRestClient {
     String password = "U&6WcT9T$~:TXpX";
     RestClient client;
     boolean isConnected = false;
-    int VOLUME_LIMIT = 50;
+    int VOLUME_LIMIT = 500;
     String CONTAINS = "Contains";
 
     private final RestTemplate restTemplate;
@@ -150,11 +150,6 @@ public class ThingsBoardRestClient {
         headers.set("X-Authorization", "Bearer " + jwtToken);
         HttpEntity<String> request = new HttpEntity<>(headers);
         VolumeDto volumeData = restTemplate.exchange(telemetryUrl, HttpMethod.GET, request, VolumeDto.class).getBody();
-        assert volumeData != null;
-        int value = Integer.parseInt(volumeData.getVolume().get(0).getValue());
-        if (value > VOLUME_LIMIT) {
-            throw new CustomMessageException("Volume limit exceeded. Volume value = " + value, 3);
-        }
         return volumeData;
     }
 
