@@ -44,6 +44,18 @@ public class FloorPlanController {
         }
     }
 
+    @PatchMapping("/upload/{id}")
+    public ResponseEntity<String> updateFloorPlan(@RequestParam("file") MultipartFile file, @PathVariable Long id) {
+        try {
+            FloorPlan floorPlan = floorPlanService.getFloorPlan(id);
+            floorPlan.setData(file.getBytes());
+            FloorPlan floorPlan2 = floorPlanService.updateFloorPlan(floorPlan);
+            return ResponseEntity.status(HttpStatus.OK).body("FloorPlan updated successfully: " + floorPlan2.getId());
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the floorPlan: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<byte[]> getFloorPlan(@PathVariable Long id) {
         FloorPlan floorPlan = floorPlanService.getFloorPlan(id);
