@@ -5,14 +5,11 @@ import com.iot.detector.controller.dto.UserDTO;
 import com.iot.detector.controller.dto.UserDetailsDTO;
 import com.iot.detector.entity.User;
 import com.iot.detector.service.UserService;
-import org.apache.coyote.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.stream.Collectors;

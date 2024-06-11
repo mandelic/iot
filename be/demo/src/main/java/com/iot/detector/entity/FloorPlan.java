@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.thingsboard.server.common.data.id.AssetId;
 
 import java.util.HashSet;
 import java.util.Set;

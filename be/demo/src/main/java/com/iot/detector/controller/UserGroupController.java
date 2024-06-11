@@ -8,18 +8,16 @@ import com.iot.detector.entity.User;
 import com.iot.detector.entity.UserGroup;
 import com.iot.detector.exceptions.EntityIdNotFoundException;
 import com.iot.detector.repository.UserGroupRepository;
-import com.iot.detector.repository.UserRepository;
 import com.iot.detector.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/user-groups")
+@CrossOrigin(origins = "*")
 public class UserGroupController {
     @Autowired
     private UserGroupRepository userGroupRepository;

@@ -2,11 +2,8 @@ package com.iot.detector.controller;
 
 import com.iot.detector.controller.dto.BasicUserDTO;
 import com.iot.detector.controller.dto.FloorPlanDTO;
-import com.iot.detector.controller.dto.UserGroupDetailsDTO;
 import com.iot.detector.entity.FloorPlan;
 import com.iot.detector.entity.User;
-import com.iot.detector.entity.UserGroup;
-import com.iot.detector.exceptions.EntityIdNotFoundException;
 import com.iot.detector.service.FloorPlanService;
 import com.iot.detector.service.ThingsBoardRestClient;
 import com.iot.detector.service.UserService;
@@ -25,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/floor-plans")
+@CrossOrigin(origins = "*")
 public class FloorPlanController {
 
     @Autowired

@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/thingsboard")
+@CrossOrigin(origins = "*")
 public class ThingsBoardController {
     @Autowired
     ThingsBoardRestClient thingsBoardRestClient;
