@@ -43,6 +43,11 @@ public class UserGroup {
         floorPlan.getUserGroups().add(this);
     }
 
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getUserGroups().add(this);
+    }
+
     public UserGroup(String name) {
         this.name = name;
     }

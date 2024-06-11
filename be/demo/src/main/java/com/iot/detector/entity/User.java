@@ -49,6 +49,14 @@ public class User {
     )
     private Set<UserGroup> userGroups = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "floor_plan_users",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "floor_plan_id")
+    )
+    private Set<FloorPlan> floorPlans = new HashSet<>();
+
     public User(String email, String firstName, String lastName, String password) {
         this.email = email;
         this.firstName = firstName;
@@ -60,5 +68,10 @@ public class User {
     public void addUserGroup(UserGroup userGroup) {
         this.userGroups.add(userGroup);
         userGroup.getUsers().add(this);
+    }
+
+    public void addFloorPlan(FloorPlan floorPlan) {
+        this.floorPlans.add(floorPlan);
+        floorPlan.getUsers().add(this);
     }
 }

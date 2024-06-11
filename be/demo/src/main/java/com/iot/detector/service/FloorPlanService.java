@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public interface FloorPlanService {
-    public FloorPlan saveFloorPlan(MultipartFile file, String name) throws IOException;
-    public FloorPlan getFloorPlan(Long id);
+    FloorPlan saveFloorPlan(MultipartFile file, String name) throws IOException;
+    FloorPlan getFloorPlan(Long id);
+    FloorPlan deleteFloorPlan(Long id);
 }

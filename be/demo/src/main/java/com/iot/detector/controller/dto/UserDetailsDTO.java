@@ -20,6 +20,7 @@ public class UserDetailsDTO {
     private String firstName;
     private String lastName;
     private Set<UserGroupDetailsDTO> groups;
+    private Set<FloorPlanDTO> floorPlans;
     private String role;
 
     public UserDetailsDTO(User user) {
@@ -28,6 +29,7 @@ public class UserDetailsDTO {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.groups = user.getUserGroups().stream().map(UserGroupDetailsDTO::new).collect(Collectors.toSet());
+        this.floorPlans = user.getFloorPlans().stream().map(FloorPlanDTO::new).collect(Collectors.toSet());
         this.role = user.getRole();
     }
 

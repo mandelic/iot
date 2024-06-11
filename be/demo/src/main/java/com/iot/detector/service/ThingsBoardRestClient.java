@@ -118,6 +118,28 @@ public class ThingsBoardRestClient {
         return volumeData;
     }
 
+    public AssetId createAsset(String name) {
+        checkConnection();
+        Asset asset = new Asset();
+        asset.setName(name);
+        asset.setLabel(name);
+        try {
+            Asset newAsset = client.createAsset(asset);
+            return newAsset.getId();
+        } catch (Exception e) {
+            throw new CustomMessageException("Creating new asset with name " + name + " failed for reason " + e.getMessage(), -1);
+        }
+    }
+
+    public void deleteAsset(AssetId assetId) {
+        checkConnection();
+        try {
+            client.deleteAsset(assetId);
+        } catch (Exception e) {
+            throw new CustomMessageException("Deleting asset with id " + assetId + " failed for reason " + e.getMessage(), -1);
+        }
+    }
+
     private void checkConnection() {
         if (!isConnected) {
             throw new CustomMessageException("ThingsBoardRestClient is not connected", 1);

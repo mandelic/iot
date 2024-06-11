@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.thingsboard.server.common.data.id.AssetId;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -21,10 +23,19 @@ public class FloorPlan {
 
     private String name;
     private String type;
+    private UUID assetId;
 
     @Column(name="data", columnDefinition="bytea")
     private byte[] data;
 
     @ManyToMany(mappedBy = "floorPlans")
     Set<UserGroup> userGroups = new HashSet<>();
+
+    @ManyToMany(mappedBy = "floorPlans")
+    Set<User> users = new HashSet<>();
+
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getFloorPlans().add(this);
+    }
 }
