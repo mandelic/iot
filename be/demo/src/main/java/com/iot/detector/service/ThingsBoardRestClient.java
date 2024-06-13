@@ -35,14 +35,16 @@ public class ThingsBoardRestClient {
     String username = "damjan.sirovatka@fer.hr";
     String password = "U&6WcT9T$~:TXpX";
     RestClient client;
-    boolean isConnected = false;
-    int VOLUME_LIMIT = 500;
+    boolean isConnected = true;
+    //int VOLUME_LIMIT = 500;
     String CONTAINS = "Contains";
 
     private final RestTemplate restTemplate;
 
     public ThingsBoardRestClient() {
         this.restTemplate = new RestTemplate();
+        client = new RestClient(url);
+        client.login(username, password);
     }
 
     public void initClient() {
@@ -177,7 +179,7 @@ public class ThingsBoardRestClient {
 
     private void checkConnection() {
         if (!isConnected) {
-            throw new CustomMessageException("ThingsBoardRestClient is not connected", 1);
+            initClient();
         }
     }
 }
