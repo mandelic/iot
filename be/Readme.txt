@@ -1,11 +1,11 @@
 ## Sound of Silence
 
 Jednostavna Spring Boot aplikacija za povezivanje na ThingsBoard platformu. Omogućava stvaranje i pohranjivanje internih korisnika aplikacije, objekata prostorije te dodjeljivanje prava korisnicima za pristup određenim prostorijama. Također je omogućena funkcija brisanja postojećih prostorija.
-Preko ThingsBoard platforme omogućeno je stvaranje novih asseta, dohvaćanje svih deviceva koji su u relaciji s određenim assetom, kreiranje novih deviceva u relaciji s određenim assetom te dohvaćanje telemetrijskih podataka za određeni uređaj. 
+Preko ThingsBoard platforme omogućeno je stvaranje novih asseta, dohvaćanje svih deviceva koji su u relaciji s određenim assetom, kreiranje novih deviceva u relaciji s određenim assetom te dohvaćanje telemetrijskih podataka za određeni uređaj.
 
 # UPUTE ZA POKRETANJE:
 
-1. Testiranje povezanosti na bazu podataka. 
+1. Testiranje povezanosti na bazu podataka.
    username: postgres.rmgzchxabieynavmukqm
    password: thesoundofsilence
    url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:6543/postgres?prepareThreshold=0
