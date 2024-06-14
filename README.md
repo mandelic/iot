@@ -5,10 +5,10 @@ Preko ThingsBoard platforme omogućeno je stvaranje novih asseta, dohvaćanje sv
 
 # UPUTE ZA POKRETANJE:
 
-1. Testiranje povezanosti na bazu podataka. 
-   username: postgres.rmgzchxabieynavmukqm
-   password: thesoundofsilence
-   url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:6543/postgres?prepareThreshold=0
+1. Testiranje povezanosti na bazu podataka.   
+   username: postgres.rmgzchxabieynavmukqm  
+   password: thesoundofsilence  
+   url: jdbc:postgresql://aws-0-eu-central-1.pooler.supabase.com:6543/postgres?prepareThreshold=0  
 2. Lokalno pokretanje Spring Boot aplikacije preko IDE-a
 3. Osnovni podaci za login:
    - ADMIN - username: admin, password: admin
